@@ -27,17 +27,25 @@ const handler: Handler = async (
         }
         console.log("new!");
 
-        const jsPath = mainHtml.match(
+        const mainJsPath = mainHtml.match(
             /<script type="module" src="(\/index\..*?\.js)"><\/script>/
         )?.[1];
-        if (notString(jsPath))
-            throw new Error("could not find js path in main html");
+        if (notString(mainJsPath))
+            throw new Error("could not find main js path in main html");
 
-        const mainJsPage = await axios.get("https://www.gimkit.com/" + jsPath);
+        const mainJsPage = await axios.get("https://www.gimkit.com/" + mainJsPath);
         const mainJs = mainJsPage?.data;
         if (notString(mainJs)) throw new Error("main js is not string");
 
-        const skinsObj = mainJs.match(
+        const cosmosJsPath = mainJs.match(/CosmosModal\.\w+\.js/)?.[0];
+        if (notString(cosmosJsPath))
+            throw new Error("could not find cosmos js path in main js");
+
+        const cosmosJsPage = await axios.get("https://www.gimkit.com/" + cosmosJsPath);
+        const cosmosJs = cosmosJsPage?.data;
+        if (notString(cosmosJs)) throw new Error("main js is not string");
+
+        const skinsObj = cosmosJs.match(
             /{(?:default\w+?:(\w+?)\("\w+?"\))(?:,\w+?:\1\("\w+?"\))+?}/i
         )?.[0];
         if (notString(skinsObj))
