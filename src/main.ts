@@ -12,6 +12,7 @@ function makeCard(skin: string) {
 
     const img = document.createElement("img");
     img.src = `https://www.gimkit.com/assets/map/characters/skins/${skin}/preview.png`;
+    img.alt = skin
 
     const a = document.createElement("a");
     a.setAttribute("target", "_blank");
