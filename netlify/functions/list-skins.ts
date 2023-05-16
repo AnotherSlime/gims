@@ -33,7 +33,9 @@ const handler: Handler = async (
         if (notString(mainJsPath))
             throw new Error("could not find main js path in main html");
 
-        const mainJsPage = await axios.get("https://www.gimkit.com/" + mainJsPath);
+        const mainJsPage = await axios.get(
+            "https://www.gimkit.com/" + mainJsPath
+        );
         const mainJs = mainJsPage?.data;
         if (notString(mainJs)) throw new Error("main js is not string");
 
@@ -41,7 +43,9 @@ const handler: Handler = async (
         if (notString(cosmosJsPath))
             throw new Error("could not find cosmos js path in main js");
 
-        const cosmosJsPage = await axios.get("https://www.gimkit.com/" + cosmosJsPath);
+        const cosmosJsPage = await axios.get(
+            "https://www.gimkit.com/" + cosmosJsPath
+        );
         const cosmosJs = cosmosJsPage?.data;
         if (notString(cosmosJs)) throw new Error("main js is not string");
 
